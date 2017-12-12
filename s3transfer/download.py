@@ -20,7 +20,7 @@ import heapq
 
 from botocore.compat import six
 from botocore.exceptions import IncompleteReadError
-from botocore.vendored.requests.packages.urllib3.exceptions import \
+from requests.packages.urllib3.exceptions import \
     ReadTimeoutError
 
 from s3transfer.compat import SOCKET_ERROR
