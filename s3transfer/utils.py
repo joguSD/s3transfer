@@ -450,7 +450,15 @@ class ReadFileChunk(object):
         self._callbacks_enabled = False
 
     def seek(self, where, whence=0):
-        self._fileobj.seek(self._start_byte + where, whence)
+        # TODO: there's another copy of this class in __init__.py
+        # we need to handle boundary checks here as well
+        if whence == 1:
+            # relative to the current position
+            where = self._amount_read + where
+        elif whence == 2:
+            # relative to the end
+            where = self._size + where
+        self._fileobj.seek(self._start_byte + where)
         if self._callbacks is not None and self._callbacks_enabled:
             # To also rewind the callback() for an accurate progress report
             invoke_progress_callbacks(
